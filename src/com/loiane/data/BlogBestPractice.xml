@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BlogBestPractice">
+	
+   <resultMap id="resultBlog" type="Blog">
+	    <id property="id" column="idBlog"/>
+	    <result property="name" column="blogName"/>
+	    <result property="url" column="url"/>
+	    <association property="author" column="idBlog" javaType="Author">
+	    	<id property="id" column="idAuthor"/>
+			<result property="name" column="authorName"/>
+			<result property="email" column="email"/>
+	    </association>
+	    <collection property="posts" column="idBlog" javaType="ArrayList" ofType="Post">
+	    	<id property="id" column="idPost"/>
+	    	<result property="title" column="title"/>
+	    	<collection property="tags" column="idBlog" javaType="ArrayList" ofType="Tag">
+	    		<id property="id" column="idTag"/>
+    			<result property="value" column="value"/>
+	    	</collection>
+	    </collection>	
+    </resultMap>
+    
+	
+	<select id="selectBlogBestPractice" resultMap="resultBlog">
+    	SELECT 
+		    B.idBlog as idBlog, B.name as blogName, B.url as url, 
+		    A.idAuthor as idAuthor, A.name as authorName, A.email as email ,
+        	P.idPost as idPost, P.title as title,
+		    T.idTag as idTag, T.value as value
+		FROM BLOG as B 
+      		left outer join Author A on B.idBlog = A.idBlog
+      		left outer join Post P on P.idBlog = B.idBlog
+      		left outer join Post_Tag PT on P.idPost = PT.idPost
+		  	left outer join Tag T on PT.idTag = T.idTag
+    </select>
+    
+</mapper>

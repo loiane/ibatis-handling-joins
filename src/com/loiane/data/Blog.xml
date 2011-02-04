@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Blog">
+	
+	<resultMap id="resultBlog" type="Blog">
+	    <id property="id" column="idBlog"/>
+	    <result property="name" column="blogname"/>
+	    <result property="url" column="blogurl"/>
+	    <association property="author" column="idBlog" javaType="Author" select="selectAuthor"/>
+	    <collection property="posts" column="idBlog" javaType="ArrayList" ofType="Post"
+	    	select="selectPosts" resultMap="resultTag"/>
+    </resultMap>
+    
+    <resultMap id="resultPosts" type="Post">
+	    <id property="id" column="idPost"/>
+	    <result property="title" column="title"/>
+	    <collection property="tags" column="idPost" javaType="ArrayList" ofType="Tag"
+	    	resultMap="resultTag"/>
+    </resultMap>
+	
+	<resultMap id="resultTag" type="Tag">
+    	<id property="id" column="idTag"/>
+    	<result property="value" column="value"/>
+    </resultMap>
+	
+    <select id="selectBlog" resultMap="resultBlog">
+    	SELECT idBlog, name as blogname, url as blogurl FROM BLOG 
+    </select>
+    
+   <select id="selectAuthor" parameterType="int" resultType="Author">
+   		SELECT idAuthor as id, name, email FROM AUTHOR WHERE idBlog = #{idBlog}
+   </select>
+   
+   <select id="selectPosts" parameterType="int" resultType="Post" resultMap="resultPosts">
+   		SELECT 
+			P.idPost as idPost, P.title as title,
+		    T.idTag as idTag, T.value as value
+		FROM Post P
+      		left outer join Post_Tag PT on P.idPost = PT.idPost
+		  	left outer join Tag T on PT.idTag = T.idTag 
+		WHERE P.idBlog = #{idBlog} 	   
+   </select>
+	
+</mapper>

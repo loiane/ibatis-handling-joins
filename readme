@@ -1,0 +1,21 @@
+MyBatis/iBatis sample application.
+This sample app demonstrates how to work with advance result mapping, one-to-one relantionship,
+one-to-many relationship and many-to-many relationship using iBatis (MyBatis 3).
+
+To run the tests, just run the class inside the com.loiane.test.* package (JUnit)
+
+All libs/jars included.
+
+Please run the scrip inside sql/script.sql
+
+Tools used to implement this project:
+Eclipse IDE - Java project
+MySQL
+
+Post URL explaning this project step-by-step:
+Enhlish: coming soon
+Portuguese-Brazil: em breve
+
+Loiane Groner
+http://loianegroner.com (English)
+http://loiane.com (Portuguese)

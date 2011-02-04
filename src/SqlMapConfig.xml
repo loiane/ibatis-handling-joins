@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="Blog" type="com.loiane.model.Blog"/>
+		<typeAlias alias="Author" type="com.loiane.model.Author"/>
+		<typeAlias alias="Post" type="com.loiane.model.Post"/>
+		<typeAlias alias="Tag" type="com.loiane.model.Tag"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+		  <transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/blog_ibatis"/>
+				<property name="username" value="root"/>
+				<property name="password" value="root"/>
+			</dataSource>
+	   </environment>
+	</environments>
+	
+    <mappers>
+  	   <mapper resource="com/loiane/data/Blog.xml"/>
+  	   <mapper resource="com/loiane/data/BlogBestPractice.xml"/>
+    </mappers>
+
+</configuration>
